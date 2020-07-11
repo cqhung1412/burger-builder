@@ -6,10 +6,10 @@ const burger = (props) => {
   return (
     <div className={classes.Burger}>
       <BurgerIngredient type='bread-top' />
-      <BurgerIngredient type='Meat' />
-      <BurgerIngredient type='Cheese' />
-      <BurgerIngredient type='Bacon' />
-      <BurgerIngredient type='Salad' />
+      <BurgerIngredient type='meat' />
+      <BurgerIngredient type='cheese' />
+      <BurgerIngredient type='bacon' />
+      <BurgerIngredient type='salad' />
       <BurgerIngredient type='bread-bottom' />
     </div>
   )
