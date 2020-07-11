@@ -11,6 +11,7 @@ const burger = (props) => {
       {ingredients.map((_, index) => (
         <BurgerIngredient key={index} type={_}/>
       ))}
+      {ingredients.length < 1 && <p>Let's start adding ingredients!</p>}
       <BurgerIngredient type='bread-bottom' />
     </div>
   )
