@@ -11,7 +11,7 @@ export default class BurgerBuilder extends Component {
   render() {
     return (
       <Auxiliary>
-        <Burger ingredients={this.state.ingredients}/>
+        <Burger ingredients={[...this.state.ingredients]}/>
         <div>Build Controller</div>
       </Auxiliary>
     )
