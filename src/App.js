@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './assets/logo.svg';
 import './App.css';
+import Layout from './components/Layout/Layout';
 
 function App() {
   return (
@@ -9,6 +10,9 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Bear Burger Builder</p>
       </header>
+      <Layout>
+        <h3>Test</h3>
+      </Layout>
     </div>
   );
 }
