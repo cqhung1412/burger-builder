@@ -1,7 +1,6 @@
 .BuildController {
-  width: 80%;
-  /* height: fit-content; */
-  min-height: 300px;
+  width: fit-content;
+  height: fit-content;
   margin: auto;
   padding: 10px 0;
   background-color: #459fb6;

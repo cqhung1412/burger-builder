@@ -5,15 +5,33 @@ import BuildController from '../../components/Burger/BuildController/BuildContro
 
 export default class BurgerBuilder extends Component {
   state = {
-    ingredients: [
-      'cheese', 'meat', 'bacon', 'salad', 'cheese', 'bacon'
-    ]
+    ingredients: []
   }
+
+  addIngredient = (ing) => {
+    this.setState({ ingredients: [...this.state.ingredients, ing] })
+  }
+
+  removeIngredient = ing => {
+    let ings = [...this.state.ingredients]
+    for (let i = 0; i < ings.length; i++) {
+      if(ings[i] === ing) {
+        ings.splice(i, 1)
+        break
+      }
+    }
+    this.setState({ ingredients: ings })
+  }
+
   render() {
     return (
       <Auxiliary>
         <Burger ingredients={[...this.state.ingredients]}/>
-        <BuildController />
+        <BuildController 
+          onLess={(ing)=>this.removeIngredient(ing)} 
+          onMore={(ing)=>this.addIngredient(ing)}
+          ingredients={[...this.state.ingredients]}
+        />
       </Auxiliary>
     )
   }
