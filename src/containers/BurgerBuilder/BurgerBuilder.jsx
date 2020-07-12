@@ -5,14 +5,23 @@ import BuildController from '../../components/Burger/BuildController/BuildContro
 
 export default class BurgerBuilder extends Component {
   state = {
-    ingredients: []
+    ingredients: [],
+    totalPrice: 0.0
   }
 
-  addIngredient = (ing) => {
-    this.setState({ ingredients: [...this.state.ingredients, ing] })
+  componentDidMount() {
+    this.setState({ ingredients: [
+        // 'bacon', 'cheese', 'meat', 'salad', 'cheese', 'meat'
+      ],
+      totalPrice: 4.0
+    })
   }
 
-  removeIngredient = ing => {
+  addIngredient = (ing, price) => {
+    this.setState({ ingredients: [...this.state.ingredients, ing], totalPrice: this.state.totalPrice + price })
+  }
+
+  removeIngredient = (ing, price) => {
     let ings = [...this.state.ingredients]
     for (let i = ings.length - 1; i >= 0; i--) {
       if(ings[i] === ing) {
@@ -20,7 +29,7 @@ export default class BurgerBuilder extends Component {
         break
       }
     }
-    this.setState({ ingredients: ings })
+    this.setState({ ingredients: ings, totalPrice: this.state.totalPrice - price })
   }
 
   render() {
@@ -28,9 +37,10 @@ export default class BurgerBuilder extends Component {
       <Auxiliary>
         <Burger ingredients={[...this.state.ingredients]}/>
         <BuildController 
-          onLess={(ing)=>this.removeIngredient(ing)} 
-          onMore={(ing)=>this.addIngredient(ing)}
+          onLess={(ing, price)=>this.removeIngredient(ing, price)} 
+          onMore={(ing, price)=>this.addIngredient(ing, price)}
           ingredients={[...this.state.ingredients]}
+          price={this.state.totalPrice}
         />
       </Auxiliary>
     )
