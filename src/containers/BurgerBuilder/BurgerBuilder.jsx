@@ -14,7 +14,7 @@ export default class BurgerBuilder extends Component {
 
   removeIngredient = ing => {
     let ings = [...this.state.ingredients]
-    for (let i = 0; i < ings.length; i++) {
+    for (let i = ings.length - 1; i >= 0; i--) {
       if(ings[i] === ing) {
         ings.splice(i, 1)
         break
