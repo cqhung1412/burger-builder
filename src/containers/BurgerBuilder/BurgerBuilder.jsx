@@ -3,6 +3,7 @@ import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import BuildController from '../../components/Burger/BuildController/BuildController'
 import Modal from '../../components/UI/Modal/Modal'
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 
 export default class BurgerBuilder extends Component {
   state = {
@@ -53,7 +54,7 @@ export default class BurgerBuilder extends Component {
   render() {
     return (
       <Auxiliary>
-        {this.state.isModalOpen && <Modal></Modal>}
+        {this.state.isModalOpen && <Modal><OrderSummary ingredients={this.state.ingredients}/></Modal>}
         <Burger ingredients={[...this.state.ingredients]}/>
         <BuildController 
           onLess={(ing, price)=>this.removeIngredient(ing, price)} 

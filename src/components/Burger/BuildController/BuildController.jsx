@@ -17,10 +17,10 @@ const BuildElement = props => {
 }
 
 const controls = [
-  { label: 'Bacon', type: 'bacon', price: 0.3 },
-  { label: 'Cheese', type: 'cheese', price: 0.5 },
-  { label: 'Meat', type: 'meat', price: 0.99 },
-  { label: 'Salad', type: 'salad', price: 0.45 },
+  { type: 'bacon', price: 0.3 },
+  { type: 'cheese', price: 0.5 },
+  { type: 'meat', price: 0.99 },
+  { type: 'salad', price: 0.45 },
 ]
 
 const buildController = props => {
@@ -38,8 +38,8 @@ const buildController = props => {
       <p>Total Price: <strong>{price.toFixed(2)}</strong></p>
       {controls.map((control, index) => (
         <BuildElement 
-          key={control.label} 
-          label={control.label}
+          key={control.type} 
+          label={control.type}
           amount={amountArr[index]}
           onLess={() => onLess(control.type, control.price)}
           onMore={() => onMore(control.type, control.price)}
