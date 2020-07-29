@@ -15,9 +15,10 @@ export default class BurgerBuilder extends Component {
 
   componentDidMount() {
     this.setState({ ingredients: [
-        // 'bacon', 'cheese', 'meat', 'salad', 'cheese', 'meat'
+        'bacon', 'cheese', 'meat', 'salad', 'cheese', 'meat'
       ],
-      totalPrice: 4.0
+      totalPrice: 4.0,
+      purchasable: true
     })
   }
 
@@ -31,7 +32,7 @@ export default class BurgerBuilder extends Component {
   }
 
   toggleModal = () => {
-    this.setState({ isModalOpen: !this.state.isModalOpen })
+    this.setState({isModalOpen: !this.state.isModalOpen })
   }
 
   addIngredient = (ing, price) => {
@@ -54,7 +55,10 @@ export default class BurgerBuilder extends Component {
   render() {
     return (
       <Auxiliary>
-        <Modal show={this.state.isModalOpen}>
+        <Modal 
+          show={this.state.isModalOpen}
+          onBackdropClick={this.toggleModal}
+        >
           <OrderSummary ingredients={this.state.ingredients}/>
         </Modal>
         <Burger ingredients={[...this.state.ingredients]}/>
