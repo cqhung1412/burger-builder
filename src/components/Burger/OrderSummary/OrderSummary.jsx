@@ -20,7 +20,7 @@ const orderSummary = (props) => {
       <p>Your delicious burger contains these following ingredients</p>
       <ul>{ingredientSummary}</ul>
       <p>Proceed to Checkout?</p>
-      <Button btnType='Success' onClick={() => {alert('Ordering to the server...')}}>CONTINUE</Button>
+      <Button btnType='Success' onClick={props.onContinue}>CONTINUE</Button>
       <Button btnType='Danger' onClick={props.onCancel}>CANCEL</Button>
     </Auxiliary>
   )

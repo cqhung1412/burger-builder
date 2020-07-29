@@ -53,6 +53,11 @@ export default class BurgerBuilder extends Component {
     this.togglePurchaseState(ings)
   }
 
+  purchaseContinueHandler = () => {
+    this.toggleModal()
+    alert('Continuing to your order...')
+  }
+
   render() {
     return (
       <Auxiliary>
@@ -60,7 +65,11 @@ export default class BurgerBuilder extends Component {
           show={this.state.isModalOpen}
           onBackdropClick={this.toggleModal}
         >
-          <OrderSummary ingredients={this.state.ingredients} onCancel={this.toggleModal}/>
+          <OrderSummary 
+            ingredients={this.state.ingredients} 
+            onCancel={this.toggleModal} 
+            onContinue={this.purchaseContinueHandler}
+          />
         </Modal>
         <Burger ingredients={[...this.state.ingredients]}/>
         <BuildController 
