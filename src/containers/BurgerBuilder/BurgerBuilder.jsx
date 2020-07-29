@@ -54,7 +54,9 @@ export default class BurgerBuilder extends Component {
   render() {
     return (
       <Auxiliary>
-        {this.state.isModalOpen && <Modal><OrderSummary ingredients={this.state.ingredients}/></Modal>}
+        <Modal show={this.state.isModalOpen}>
+          <OrderSummary ingredients={this.state.ingredients}/>
+        </Modal>
         <Burger ingredients={[...this.state.ingredients]}/>
         <BuildController 
           onLess={(ing, price)=>this.removeIngredient(ing, price)} 
