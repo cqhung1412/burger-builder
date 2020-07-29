@@ -18,7 +18,8 @@ export default class BurgerBuilder extends Component {
         'bacon', 'cheese', 'meat', 'salad', 'cheese', 'meat'
       ],
       totalPrice: 4.0,
-      purchasable: true
+      purchasable: true,
+      isModalOpen: true
     })
   }
 
@@ -59,7 +60,7 @@ export default class BurgerBuilder extends Component {
           show={this.state.isModalOpen}
           onBackdropClick={this.toggleModal}
         >
-          <OrderSummary ingredients={this.state.ingredients}/>
+          <OrderSummary ingredients={this.state.ingredients} onCancel={this.toggleModal}/>
         </Modal>
         <Burger ingredients={[...this.state.ingredients]}/>
         <BuildController 
