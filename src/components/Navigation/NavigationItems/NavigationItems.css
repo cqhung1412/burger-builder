@@ -18,10 +18,10 @@
 .NavigationItem a {
   color: white;
   text-decoration: none;
-  height: 100%;
-  padding: 0px 10px;
+  height:100%;
+  padding: 10px 10px;
   border-bottom: 4px solid transparent;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-sizing: border-box;
   display: block;
 }
