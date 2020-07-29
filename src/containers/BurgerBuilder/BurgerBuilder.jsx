@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import BuildController from '../../components/Burger/BuildController/BuildController'
+import Modal from '../../components/UI/Modal/Modal'
 
 export default class BurgerBuilder extends Component {
   state = {
     ingredients: [],
-    totalPrice: 0.0
+    totalPrice: 0.0,
+    purchasable: false,
+    isModalOpen: false
   }
 
   componentDidMount() {
@@ -17,8 +20,22 @@ export default class BurgerBuilder extends Component {
     })
   }
 
+  togglePurchaseState(ings) {
+    const ingsArr = ings.reduce((prev, curr) => {
+      prev[curr] = (prev[curr] || 0) + 1
+      return prev
+    }, { 'bacon': 0, 'cheese': 0, 'meat': 0, 'salad': 0 })
+    const sum = Object.values(ingsArr).reduce((sum, el) => sum += el, 0)
+    this.setState({ purchasable: sum > 1 })
+  }
+
+  toggleModal = () => {
+    this.setState({ isModalOpen: !this.state.isModalOpen })
+  }
+
   addIngredient = (ing, price) => {
     this.setState({ ingredients: [...this.state.ingredients, ing], totalPrice: this.state.totalPrice + price })
+    this.togglePurchaseState([...this.state.ingredients, ing])
   }
 
   removeIngredient = (ing, price) => {
@@ -30,17 +47,21 @@ export default class BurgerBuilder extends Component {
       }
     }
     this.setState({ ingredients: ings, totalPrice: this.state.totalPrice - price })
+    this.togglePurchaseState(ings)
   }
 
   render() {
     return (
       <Auxiliary>
+        {this.state.isModalOpen && <Modal></Modal>}
         <Burger ingredients={[...this.state.ingredients]}/>
         <BuildController 
           onLess={(ing, price)=>this.removeIngredient(ing, price)} 
           onMore={(ing, price)=>this.addIngredient(ing, price)}
+          onOrder={this.toggleModal}
           ingredients={[...this.state.ingredients]}
           price={this.state.totalPrice}
+          purchasable={this.state.purchasable}
         />
       </Auxiliary>
     )

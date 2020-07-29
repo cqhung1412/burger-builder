@@ -24,7 +24,7 @@ const controls = [
 ]
 
 const buildController = props => {
-  const { onLess, onMore, ingredients, price } = props
+  const { onLess, onMore, onOrder, ingredients, price, purchasable } = props
 
   const ingsArr = ingredients.reduce((prev, curr) => {
     prev[curr] = (prev[curr] || 0) + 1
@@ -45,6 +45,7 @@ const buildController = props => {
           onMore={() => onMore(control.type, control.price)}
         />
       ))}
+      <button disabled={!purchasable} className={classes.OrderButton} onClick={onOrder}>ORDER NOW</button>
     </div>
   )
 }
