@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger'
 import BuildController from '../../components/Burger/BuildController/BuildController'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import axios from '../../axios-orders'
 
 export default class BurgerBuilder extends Component {
   state = {
@@ -14,7 +15,16 @@ export default class BurgerBuilder extends Component {
   }
 
   componentDidMount() {
-    this.setState({ totalPrice: 4.0 })
+    this.setup()
+  }
+
+  setup() {
+    this.setState({
+      ingredients: [],
+      totalPrice: 4.0,
+      purchasable: false,
+      isModalOpen: false
+    })
   }
 
   togglePurchaseState(ings) {
@@ -48,8 +58,32 @@ export default class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    this.toggleModal()
-    alert('Continuing to your order...')
+    
+    // alert('Continuing to your order...')
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice, // Shouldn't use in a real app
+      customer: {
+        name: 'Hùng Gấu',
+        address: {
+          street: '23 PVD',
+          ward: 'HBC',
+          district: 'TD',
+          city: 'HCM'
+        },
+        phone: '0903074656'
+      },
+      deliveryMethod: 'express'
+    }
+    axios.post('/orders.json', order)
+      .then(res => {
+        if(res) {
+          alert('Order Successfully!')
+          console.log(res)
+          this.setup()
+        }
+      })
+      .catch(err => console.log(err))
   }
 
   render() {
