@@ -4,6 +4,8 @@ import Burger from '../../components/Burger/Burger'
 import BuildController from '../../components/Burger/BuildController/BuildController'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import Spinner from '../../components/UI/Spinner/Spinner'
+
 import axios from '../../axios-orders'
 
 export default class BurgerBuilder extends Component {
@@ -11,7 +13,8 @@ export default class BurgerBuilder extends Component {
     ingredients: [],
     totalPrice: 0.0,
     purchasable: false,
-    isModalOpen: false
+    isModalOpen: false,
+    loading: false
   }
 
   componentDidMount() {
@@ -23,7 +26,8 @@ export default class BurgerBuilder extends Component {
       ingredients: [],
       totalPrice: 4.0,
       purchasable: false,
-      isModalOpen: false
+      isModalOpen: false,
+      loading: false
     })
   }
 
@@ -58,8 +62,7 @@ export default class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    
-    // alert('Continuing to your order...')
+    this.setState({ loading: true })
     const order = {
       ingredients: this.state.ingredients,
       price: this.state.totalPrice, // Shouldn't use in a real app
@@ -78,27 +81,36 @@ export default class BurgerBuilder extends Component {
     axios.post('/orders.json', order)
       .then(res => {
         if(res) {
-          alert('Order Successfully!')
           console.log(res)
           this.setup()
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+        this.setup()
+      })
   }
 
   render() {
+    let orderSummary = (
+      <OrderSummary 
+        ingredients={this.state.ingredients} 
+        totalPrice={this.state.totalPrice}
+        onCancel={this.toggleModal} 
+        onContinue={this.purchaseContinueHandler}
+      />
+    )
+    if (this.state.loading) {
+      orderSummary = <Spinner />
+    }
+
     return (
       <Auxiliary>
         <Modal 
           show={this.state.isModalOpen}
           onBackdropClick={this.toggleModal}
         >
-          <OrderSummary 
-            ingredients={this.state.ingredients} 
-            totalPrice={this.state.totalPrice}
-            onCancel={this.toggleModal} 
-            onContinue={this.purchaseContinueHandler}
-          />
+          {orderSummary}
         </Modal>
         <Burger ingredients={[...this.state.ingredients]}/>
         <BuildController 
