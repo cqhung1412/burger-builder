@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../../../assets/images/burger-logo.png'
 import NavigationItems from '../NavigationItems/NavigationItems'
-import Auxiliary from '../../../hoc/Auxiliary'
+import Auxiliary from '../../../hoc/Auxiliary/Auxiliary'
 import Backdrop from '../../UI/Backdrop/Backdrop'
 import classes from './SideDrawer.css'
 
