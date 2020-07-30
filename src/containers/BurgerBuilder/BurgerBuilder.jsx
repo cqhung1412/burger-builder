@@ -14,11 +14,7 @@ export default class BurgerBuilder extends Component {
   }
 
   componentDidMount() {
-    this.setState({ ingredients: [
-        // 'bacon', 'cheese', 'meat', 'salad', 'cheese', 'meat'
-      ],
-      totalPrice: 4.0,
-    })
+    this.setState({ totalPrice: 4.0 })
   }
 
   togglePurchaseState(ings) {
