@@ -11,7 +11,7 @@
 
 .ToolbarHeader {
   background-color: #282c34;
-  max-height: 8vh;
+  height: 8vh;
   left: 0;
   top: 0;
   padding: 0 20px;
@@ -27,6 +27,16 @@
 
 .ToolbarHeader nav {
   height: 100%;
+}
+
+@media (max-width: 499px) {
+  .ToolbarHeader {
+    flex-direction: row-reverse;
+  }
+
+  .DesktopOnly {
+    display: none;
+  }
 }
 
 @keyframes Toolbar-logo-spin {

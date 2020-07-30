@@ -3,14 +3,14 @@ import logo from '../../../assets/images/burger-logo.png';
 import classes from './Toolbar.css'
 import NavigationItems from '../NavigationItems/NavigationItems';
 
-const toolbar = () => {
+const toolbar = (props) => {
   return (
     <header className={classes.ToolbarHeader}>
       <img src={logo} className={classes.ToolbarLogo} alt="logo" />
-      <nav>
+      <nav className={classes.DesktopOnly}>
         <NavigationItems />
       </nav>
-      <p>Bear Burger Builder</p>
+      <div onClick={props.toggleSideDrawer}>MENU</div>
     </header>
   )
 }
