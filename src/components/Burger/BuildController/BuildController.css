@@ -1,8 +1,8 @@
 .BuildController {
   width: fit-content;
   height: fit-content;
-  margin: auto;
-  padding: 10px 0;
+  margin: 10px auto;
+  padding-bottom: 10px;
   background-color: #d0efff;
   display: flex;
   flex-direction: column;
