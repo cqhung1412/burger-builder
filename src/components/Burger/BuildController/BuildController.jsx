@@ -10,7 +10,7 @@ const BuildElement = props => {
         onClick={props.onLess}
         disabled={props.amount === 0}
       >Less</button>
-      <div className={classes.Label}>{props.amount}</div>
+      <div className={classes.Amount}>{props.amount}</div>
       <button className={classes.More} onClick={props.onMore}>More</button>
     </div>
   )

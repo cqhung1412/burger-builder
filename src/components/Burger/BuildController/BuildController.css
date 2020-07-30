@@ -7,8 +7,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 1px #ccc;
-  text-align: center;
+  box-shadow: 1px 2px 1px #ccc;
+  border-radius: 5px;
 }
 
 .BuildElement {
@@ -16,6 +16,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 5px 0;
+  padding: 0 10px;
 }
 
 .BuildElement button {
@@ -23,8 +24,9 @@
   font: inherit;
   padding: 5px;
   margin: 0 5px;
-  width: 80px;
+  width: 60px;
   border: 1px solid #AA6817;
+  border-radius: 3px;
   cursor: pointer;
   outline: none;
 }
@@ -43,10 +45,16 @@
 }
 
 .Label {
-  padding: 10px;
+  padding: 5px 10px;
   font-weight: bold;
-  width: 80px;
+  width: 50px;
   text-transform: capitalize;
+  text-align: right;
+}
+
+.Amount {
+  padding: 0 20px;
+  text-align: center;
 }
 
 .BuildElement .Less {  
@@ -75,6 +83,7 @@
   outline: none;
   cursor: pointer;
   border: 1px solid #966909;
+  border-radius: 3px;
   color: #fff;
   font-family: inherit;
   font-size: 1.2em;
