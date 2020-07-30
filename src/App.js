@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './App.css';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+import AuxWithClass from './hoc/Auxiliary/AuxWithClass/AuxWithClass';
 
 function App() {
   return (
@@ -13,4 +14,4 @@ function App() {
   );
 }
 
-export default App;
+export default AuxWithClass(App, classes.App);
