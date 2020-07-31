@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import classes from './App.css';
 
 import Layout from './hoc/Layout/Layout';
@@ -10,8 +11,13 @@ function App() {
   return (
     <div className={classes.App}>
       <Layout>
-        <BurgerBuilder />
-        <Checkout />
+        <Switch>
+          <Route path='/builder' component={BurgerBuilder} />
+          <Route path='/checkout' component={Checkout} />
+          <Redirect exact from='/' to='/builder' />
+          <Route render={() => <h1>404 Not Found!!!</h1>}/>
+        </Switch>
+        
       </Layout>
     </div>
   );
