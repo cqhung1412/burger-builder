@@ -6,6 +6,7 @@ import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
 import AuxWithClass from './hoc/Auxiliary/AuxWithClass/AuxWithClass';
+import QRCodeHandler from './containers/QRCode/QRCodeHandler';
 
 function App() {
   return (
@@ -14,10 +15,10 @@ function App() {
         <Switch>
           <Route path='/builder' component={BurgerBuilder} />
           <Route path='/checkout' component={Checkout} />
+          <Route path='/qrcode' component={QRCodeHandler} />
           <Redirect exact from='/' to='/builder' />
           <Route render={() => <h1>404 Not Found!!!</h1>}/>
         </Switch>
-        
       </Layout>
     </div>
   );
