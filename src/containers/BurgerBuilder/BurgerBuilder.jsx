@@ -19,18 +19,28 @@ class BurgerBuilder extends Component {
   }
   
   componentDidMount() {
-    console.log(this.props)
+    // console.log(this.props)
     axios.get('/ingredients.json')
       .then(res => {
         const ingredients = res.data
-        const ingArr = Object.keys(ingredients)
-        this.setup(ingArr)
-        this.togglePurchaseState(ingArr)
+
+        const keyArr = Object.keys(ingredients)
+        const valArr = Object.values(ingredients)
+
+        let ingArr = []
+        valArr.forEach((value, index) => {
+          ingArr.push(Array(value).fill(keyArr[index])) // ingArr = [[cheese, cheese], [meat, ...], ...]
+        })
+        const result = ingArr.flat() // result = [cheese, cheese, meat, meat, meat, ...]
+        
+        this.setup(result) 
+        this.togglePurchaseState(result)
       })
       .catch(err => console.log(err))
   }
 
   setup(ingredients = []) {
+    // console.log(ingredients)
     this.setState({
       ingredients: ingredients,
       totalPrice: 4.0,
