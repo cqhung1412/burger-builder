@@ -18,6 +18,7 @@ const navigationItems = (props) => {
     <ul className={classes.NavigationItems}>
       <NavigationItem link='/builder'>BEAR BURGER</NavigationItem>
       <NavigationItem link='/checkout'>CHECKOUT</NavigationItem>
+      <NavigationItem link='/qrcode'>QR CODE</NavigationItem>
     </ul>
   )
 }
