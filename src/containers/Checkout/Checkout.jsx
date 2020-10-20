@@ -10,19 +10,29 @@ import axios from '../../axios-orders'
 
 class Checkout extends Component {
   state = {
-    ingredients: null
+    ingredients: null,
+    price: null
   }
   
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!prevState.ingredients) {
       const ingredients = []
+      let price = 0.0
       const query = new URLSearchParams(nextProps.location.search)
       
       for (let param of query.entries()) {
-        ingredients.push(param[0])
+        if (param[0] === 'price') {
+          price = param[1]
+        }
+        else {
+          ingredients.push(param[0])
+        }
       }
 
-      return { ingredients: ingredients } // ings: ['salad', 'cheese', 'bacon', 'meat']
+      return { 
+        ingredients: ingredients,
+        price: price
+      } // ings: ['salad', 'cheese', 'bacon', 'meat']
     }
     return null
   }
@@ -43,7 +53,10 @@ class Checkout extends Component {
           onCancel={this.checkoutCancelHandler}
           onConfirm={this.checkoutConfirmHandler}
         />
-        <Route path={this.props.match.path + '/contact'} component={ContactData}/>
+        <Route 
+          path={this.props.match.path + '/contact'} 
+          render={() => (<ContactData ingredients={this.state.ingredients} price={this.state.price} />)}
+        />
       </Auxiliary>
     )
   }

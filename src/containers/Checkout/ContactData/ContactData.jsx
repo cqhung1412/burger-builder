@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import Button from '../../../components/UI/Button/Button'
 
+import axios from '../../../axios-orders'
 import classes from './ContactData.css'
 
 export default class ContactData extends Component {
@@ -13,7 +14,31 @@ export default class ContactData extends Component {
           ward: 'HBC',
           district: 'TD',
           city: 'HCM'
+        },
+        loading: false
+    }
+
+    orderHandler = (event) => {
+        event.preventDefault()
+
+        const { name, phone, address } = this.state
+        const { ingredients, price } = this.props
+        
+        console.log(ingredients)
+        this.setState({ loading: true })
+        const order = {
+          ingredients: ingredients,
+          price: price,
+          customer: {
+            name: name,
+            address: address,
+            phone: phone
+          },
+          deliveryMethod: 'express'
         }
+        axios.post('/orders.json', order)
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
     }
 
     render() {
@@ -27,7 +52,7 @@ export default class ContactData extends Component {
                     <input className={classes.Input} type='text' name='ward' placeholder='Ward' />
                     <input className={classes.Input} type='text' name='district' placeholder='District' />
                     <input className={classes.Input} type='text' name='city' placeholder='City' />
-                    <Button btnType='Success'>ORDER</Button>
+                    <Button btnType='Success' clicked={this.orderHandler}>ORDER</Button>
                 </form>       
             </div>
         )
