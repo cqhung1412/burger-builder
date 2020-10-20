@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
+
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+import ContactData from './ContactData/ContactData'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary'
 
@@ -21,7 +24,7 @@ class Checkout extends Component {
 
       return { ingredients: ingredients } // ings: ['salad', 'cheese', 'bacon', 'meat']
     }
-    return { ingredients: [] }
+    return null
   }
 
   checkoutCancelHandler = () => {
@@ -40,6 +43,7 @@ class Checkout extends Component {
           onCancel={this.checkoutCancelHandler}
           onConfirm={this.checkoutConfirmHandler}
         />
+        <Route path={this.props.match.path + '/contact'} component={ContactData}/>
       </Auxiliary>
     )
   }
