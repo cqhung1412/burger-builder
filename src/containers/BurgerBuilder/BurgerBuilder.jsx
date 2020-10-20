@@ -40,7 +40,6 @@ class BurgerBuilder extends Component {
   }
 
   setup(ingredients = []) {
-    // console.log(ingredients)
     this.setState({
       ingredients: ingredients,
       totalPrice: 4.0,
@@ -60,7 +59,7 @@ class BurgerBuilder extends Component {
   }
 
   toggleModal = () => {
-    this.setState({isModalOpen: !this.state.isModalOpen })
+    this.setState({ isModalOpen: !this.state.isModalOpen })
   }
 
   addIngredient = (ing, price) => {
@@ -101,7 +100,16 @@ class BurgerBuilder extends Component {
     //   .then(res => console.log(res))
     //   .catch(err => console.log(err))
     // this.setup()
-    this.props.history.push('/checkout')
+    
+    const queryParams = []
+    this.state.ingredients.forEach(ing => {
+      queryParams.push(encodeURIComponent(ing))
+    })
+    const queryString = queryParams.join('&')
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString
+    })
   }
 
   render() {
