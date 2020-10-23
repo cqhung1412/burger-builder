@@ -11,7 +11,7 @@ import axios from '../../axios-orders'
 class Checkout extends Component {
   state = {
     ingredients: null,
-    price: null
+    price: 0.0
   }
   
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -55,7 +55,7 @@ class Checkout extends Component {
         />
         <Route 
           path={this.props.match.path + '/contact'} 
-          render={() => (<ContactData ingredients={this.state.ingredients} price={this.state.price} />)}
+          render={(props) => (<ContactData ingredients={this.state.ingredients} price={this.state.price} {...props} />)}
         />
       </Auxiliary>
     )

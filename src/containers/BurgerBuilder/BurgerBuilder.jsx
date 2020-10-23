@@ -63,7 +63,10 @@ class BurgerBuilder extends Component {
   }
 
   addIngredient = (ing, price) => {
-    this.setState({ ingredients: [...this.state.ingredients, ing], totalPrice: this.state.totalPrice + price })
+    this.setState({ 
+      ingredients: [...this.state.ingredients, ing], 
+      totalPrice: this.state.totalPrice + price 
+    })
     this.togglePurchaseState([...this.state.ingredients, ing])
   }
 
