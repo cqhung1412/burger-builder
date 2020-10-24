@@ -28,7 +28,7 @@ export default class Orders extends Component {
     return (
       <div>
         {
-          this.state.orders.map((order, index) => <Order key={index} ingredients={order.ingredients} />)
+          this.state.orders.map((order, index) => <Order key={index} ingredients={order.ingredients} price={order.price} />)
         }
       </div>
     )

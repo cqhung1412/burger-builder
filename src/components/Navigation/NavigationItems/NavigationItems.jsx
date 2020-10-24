@@ -6,6 +6,7 @@ const NavigationItem = (props) => {
   return (
     <li className={classes.NavigationItem}>
       <NavLink 
+        exact={props.exact}
         to={props.link} 
         activeClassName={classes.active}
       >{props.children}</NavLink>
@@ -16,8 +17,8 @@ const NavigationItem = (props) => {
 const navigationItems = (props) => {
   return (
     <ul className={classes.NavigationItems}>
+      {/* <NavigationItem link='/' exact>HOME</NavigationItem> */}
       <NavigationItem link='/builder'>BEAR BURGER</NavigationItem>
-      <NavigationItem link='/checkout'>CHECKOUT</NavigationItem>
       <NavigationItem link='/orders'>ORDERS</NavigationItem>
       <NavigationItem link='/qrcode'>QR CODE</NavigationItem>
     </ul>

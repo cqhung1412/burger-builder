@@ -35,7 +35,7 @@ export default class ContactData extends Component {
         address: address,
         phone: phone
       },
-      deliveryMethod: 'express'
+      deliveryMethod: 'freeship'
     }
     axios.post('/orders.json', order)
       .then(res => {
