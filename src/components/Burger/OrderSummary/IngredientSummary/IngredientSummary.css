@@ -1,0 +1,7 @@
+.IngredientName {
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    text-transform: capitalize;
+}

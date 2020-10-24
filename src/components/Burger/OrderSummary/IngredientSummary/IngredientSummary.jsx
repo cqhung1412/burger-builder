@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+
+import classes from './IngredientSummary.css'
 
 const ingredientSummary = (props) => {
     const { ingredients } = props
@@ -9,15 +11,17 @@ const ingredientSummary = (props) => {
     }, { 'bacon': 0, 'cheese': 0, 'meat': 0, 'salad': 0 })
 
     return (
-        <ul>
+        <Fragment>
             {
                 Object.keys(ingsArr)
                     .filter(ing => ingsArr[ing] !== 0)
                     .map(ing =>
-                        <li key={ing}><strong style={{ textTransform: 'capitalize' }}>{ing}</strong>: {ingsArr[ing]}</li>
+                        <div className={classes.IngredientName} key={ing}>
+                            {ing} ({ingsArr[ing]})
+                        </div>
                     )
             }
-        </ul>
+        </Fragment>
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import axios from '../../axios-orders'
 import Order from '../../components/Order/Order'
@@ -7,6 +7,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 class Orders extends Component {
   state = {
+    orderKeys: [],
     orders: [],
     loading: false
   }
@@ -16,38 +17,39 @@ class Orders extends Component {
 
     axios.get('/orders.json')
       .then(res => {
+        const keysArr = Object.keys(res.data)
         const ordersArr = Object.values(res.data)
-        this.setState({ orders: ordersArr, loading: false })
+        this.setState({ orderKeys: keysArr, orders: ordersArr, loading: false })
       })
       .catch(err => {
         console.log(err)
-        this.setState({ orders: [], loading: false })
+        this.setState({ orderKeys: [], orders: [], loading: false })
       })
   }
 
   render() {
-    const { orders } = this.state
+    const { orders, orderKeys } = this.state
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '0 1.5rem'
+        }}
+      >
         {
           orders.length === 0
             ?
-            <div
-              style={ {
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '0 1.5rem'
-              } }
-            >
+            <Fragment>
               <h3>You have not ordered yet!</h3>
               <Button
                 btnType='Success'
                 onClick={() => { this.props.history.push('/builder') }}
               >ORDER NOW</Button>
-            </div>
+            </Fragment>
             :
-            orders.map((order, index) => <Order key={index} ingredients={order.ingredients} price={order.price} />)
+            orders.map((order, index) => <Order key={orderKeys[index]} ingredients={order.ingredients} price={order.price} />)
         }
       </div>
     )
