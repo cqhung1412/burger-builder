@@ -11,18 +11,16 @@ import Orders from './containers/Orders/Orders';
 
 function App() {
   return (
-    <div className={classes.App}>
-      <Layout>
-        <Switch>
-          <Route path='/builder' component={BurgerBuilder} />
-          <Route path='/checkout' component={Checkout} />
-          <Route path='/orders' component={Orders} />
-          <Route path='/qrcode' component={QRCodeHandler} />
-          <Redirect exact from='/' to='/builder' />
-          <Route render={() => <h1>404 Not Found!!!</h1>}/>
-        </Switch>
-      </Layout>
-    </div>
+    <Layout>
+      <Switch>
+        <Route path='/builder' component={BurgerBuilder} />
+        <Route path='/checkout' component={Checkout} />
+        <Route path='/orders' component={Orders} />
+        <Route path='/qrcode' component={QRCodeHandler} />
+        <Redirect exact from='/' to='/builder' />
+        <Route render={() => <h1>404 Not Found!!!</h1>} />
+      </Switch>
+    </Layout>
   );
 }
 

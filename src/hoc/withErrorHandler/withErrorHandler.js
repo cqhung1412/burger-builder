@@ -49,3 +49,4 @@ const withErrorHandler = (WrappedComponent, axios) => {
 }
 
 export default withErrorHandler
+// This doesn't work

@@ -8,7 +8,7 @@ const Order = (props) => {
     <div className={classes.Order}>
       <p>Ingredients: </p>
       <IngredientSummary ingredients={props.ingredients} totalPrice={props.price}/>
-      <p>Total Price: <strong>${props.price}</strong></p>
+      <p>Total Price: <strong>{props.price}$</strong></p>
     </div>
   )
 }
