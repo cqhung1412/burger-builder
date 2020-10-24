@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import axios from '../../axios-orders'
+
 import Order from '../../components/Order/Order'
 import Button from '../../components/UI/Button/Button'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
@@ -49,7 +50,7 @@ class Orders extends Component {
               >ORDER NOW</Button>
             </Fragment>
             :
-            orders.map((order, index) => <Order key={orderKeys[index]} ingredients={order.ingredients} price={order.price} />)
+            orders.map((order, index) => <Order key={index} orderKey={orderKeys[index]} ingredients={order.ingredients} price={order.price} />)
         }
       </div>
     )

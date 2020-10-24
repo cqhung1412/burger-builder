@@ -1,16 +1,36 @@
-import React from 'react'
+import React, { Component } from 'react'
+
+import axios from '../../axios-orders'
+
 import IngredientSummary from '../Burger/OrderSummary/IngredientSummary/IngredientSummary'
+import Button from '../UI/Button/Button'
 
 import classes from './Order.css'
 
-const Order = (props) => {
-  return (
-    <div className={classes.Order}>
-      <p>Ingredients: </p>
-      <IngredientSummary ingredients={props.ingredients} totalPrice={props.price}/>
-      <p>Total Price: <strong>{props.price}$</strong></p>
-    </div>
-  )
+class Order extends Component {
+  deleteOrderHandler = () => {
+    axios.delete('/orders/' + this.props.orderKey)
+      .then(() => {
+
+      })
+  }
+
+  render() {
+    const { ingredients, price } = this.props
+    return (
+      <div className={classes.Order}>
+        <p>Ingredients: </p>
+        <IngredientSummary ingredients={ingredients} totalPrice={price} />
+        <p>Total Price: <strong>{price}$</strong></p>
+        <Button
+          btnType='Danger'
+          onClick={this.deleteOrderHandler}
+        >
+          DELETE
+        </Button>
+      </div>
+    )
+  }
 }
 
 export default Order
