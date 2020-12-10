@@ -1,52 +1,48 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react';
 
-import Modal from '../../components/UI/Modal/Modal'
-import Auxiliary from '../Auxiliary/Auxiliary'
-
+import Modal from '../../components/UI/Modal/Modal';
 
 const withErrorHandler = (WrappedComponent, axios) => {
-  return class extends Component {
-    state = {
-      error: null
-    }
+  const WithErrorHandler = props => {
+    const [error, setError] = useState(null);
+    // Will mount
+    const requestInterceptor = axios.interceptors.request.use(
+      req => {
+        setError(null);
+        return req;
+      }
+    );
+    const responseInterceptor = axios.interceptors.response.use(
+      res => res,
+      error => {
+        setError(error);
+        console.log('WithErrorHandler: ', error);
+        return Promise.reject(error);
+      }
+    );
 
-    componentDidMount() {   
-      this.reqInterceptor = axios.interceptors.request.use(req => {
-        this.setState({ error: null })
-        return req
-      })
+    useEffect(
+      () => { // Unmount
+        return () => {
+          axios.interceptors.request.eject(requestInterceptor);
+          axios.interceptors.response.eject(responseInterceptor);
+        };
+      },
+      [requestInterceptor, responseInterceptor]
+    );
 
-      this.resInterceptor = axios.interceptors.response.use(res => res, error => {
-        this.setState({ error: error })
-        console.log(error)
-      })
-    }
+    return <>
+      <Modal
+        show={error}
+        onBackdropClick={() => setError(null)}
+      >
+        <h3>Something didn't work @@</h3>
+        {error && error.message}
+      </Modal>
+      <WrappedComponent {...props} />
+    </>
+  };
+  return WithErrorHandler;
+};
 
-    componentWillUnmount() {
-      axios.interceptors.request.eject(this.reqInterceptor)
-      axios.interceptors.response.eject(this.resInterceptor)
-    }
-
-    errorConfirmHandler = () => {
-      this.setState({ error: null })
-    }
-
-    render() {
-      return (
-        <Auxiliary>
-          <Modal 
-            show={this.state.error}
-            onBackdropClick={this.errorConfirmHandler}
-          >
-            <h3>Something didn't work @@</h3>
-            {this.state.error && this.state.error.message}
-          </Modal>
-          <WrappedComponent {...this.props} />
-        </Auxiliary>
-      )
-    }
-  }
-}
-
-export default withErrorHandler
-// This doesn't work
+export default withErrorHandler;
