@@ -2,19 +2,30 @@ import React, { Component } from 'react'
 
 import Button from '../../../components/UI/Button/Button'
 import Spinner from '../../../components/UI/Spinner/Spinner'
+import Input from '../../../components/UI/Input/Input'
 
 import axios from '../../../axios-orders'
 import classes from './ContactData.css'
 
+const htmlConfig = (placeholder = '', type = 'text', eType = 'input') => {
+  return {
+    elementType: eType,
+    elementConfig: {
+      type: type,
+      placeholder: placeholder
+    },
+    value: ''
+  }
+}
+
 export default class ContactData extends Component {
   state = {
-    name: 'Quốc Hùng',
-    phone: '0903074655',
-    address: {
-      street: '23 PVD',
-      ward: 'HBC',
-      district: 'TD',
-      city: 'HCM'
+    orderForm: {
+      name: htmlConfig('Your Name'),
+      email: htmlConfig('Your Email', 'email'),
+      phone: htmlConfig('Your Number', 'tel'),
+      address: htmlConfig('Street Address'),
+      zipCode: htmlConfig('Zip Code')
     },
     loading: false
   }
@@ -56,12 +67,11 @@ export default class ContactData extends Component {
   render() {
     let form = (
       <form onSubmit={this.orderHandler}>
-        <input className={classes.Input} type='text' name='tel' placeholder='Your Phone Number' />
-        <input className={classes.Input} type='text' name='name' placeholder='Your Name' />
-        <input className={classes.Input} type='text' name='street' placeholder='Street' />
-        <input className={classes.Input} type='text' name='ward' placeholder='Ward' />
-        <input className={classes.Input} type='text' name='district' placeholder='District' />
-        <input className={classes.Input} type='text' name='city' placeholder='City' />
+        <Input inputtype='input' type='text' name='name' placeholder='Name' />
+        <Input inputtype='input' type='email' name='email' placeholder='Email' />
+        <Input inputtype='input' type='tel' name='tel' placeholder='Phone Number' />
+        <Input inputtype='input' type='text' name='street' placeholder='Street Address' />
+        <Input inputtype='input' type='text' name='postal' placeholder='Postal Code' />
         <Button btnType='Success' type='submit'>ORDER</Button>
       </form>
     )
