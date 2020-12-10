@@ -1,28 +1,52 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import classes from './Input.css'
 
 const Input = (props) => {
-  const { inputtype } = props;
-
+  const { eType, eConfig, value, onChange } = props
+  const { id, type, options, label } = eConfig
   let inputElement = null
-  switch (inputtype) {
+  const inputAttributes = {
+    className: classes.InputElement,
+    name: id,
+    id,
+    type,
+    value,
+    onChange
+  }
+
+  switch (eType) {
     case ('input'):
-      inputElement = <input className={classes.InputElement} {...props} />
-      break
-    case ('text'):
-      inputElement = <input className={classes.InputElement} {...props} />
+      inputElement = <input {...inputAttributes} />
       break
     case ('textarea'):
-      inputElement = <textarea className={classes.InputElement} {...props} />
+      inputElement = <textarea {...inputAttributes} />
+      break
+    case ('select'):
+      inputElement = (
+        <Fragment>
+          <select {...inputAttributes} > {
+            options.map((opt, index) =>
+              <option key={index} value={opt.value}>
+                {opt.displayValue}
+              </option>
+            )
+          } </select>
+        </Fragment>
+      )
       break
     default:
-      inputElement = <input className={classes.InputElement} {...props} />
+      inputElement = <input {...inputAttributes} />
   }
 
   return (
     <div className={classes.Input}>
-      {/* <label className={classes.Label}>{props.label}</label> */}
+      <label
+        className={classes.Label}
+        htmlFor={id}
+      >
+        {label}
+      </label>
       {inputElement}
     </div>
   )
