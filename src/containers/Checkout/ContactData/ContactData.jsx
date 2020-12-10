@@ -38,33 +38,36 @@ export default class ContactData extends Component {
 
   inputChangedHandler = (e, targetId) => {
     const updatedOrderForm = { ...this.state.orderForm }
-    const updatedElement = { 
-      ...updatedOrderForm[targetId], 
-      value: e.target.value 
+    const updatedElement = {
+      ...updatedOrderForm[targetId],
+      value: e.target.value
     }
     updatedOrderForm[targetId] = updatedElement
-    this.setState({ orderForm: { ...updatedOrderForm }})
+    this.setState({ orderForm: { ...updatedOrderForm } })
   }
 
   orderHandler = (event) => {
     event.preventDefault()
 
-    const { name, email, phone, address, zipCode, deliveryMethod } = this.state.orderForm
     const { ingredients, price } = this.props
+    const orderData = { ...this.state.orderForm }
+    for (let e in orderData) {
+      orderData[e] = orderData[e].value
+    }
+    const { name, email, address, phone, zipCode, deliveryMethod } = orderData
 
     this.setState({ loading: true })
-
     const order = {
       ingredients: ingredients,
       price: price,
       customer: {
-        name: name.value,
-        email: email.value,
-        address: address.value,
-        phone: phone.value,
-        zipCode: zipCode.value
+        name,
+        email,
+        address,
+        phone,
+        zipCode
       },
-      deliveryMethod: deliveryMethod.value
+      deliveryMethod
     }
     axios.post('/orders.json', order)
       .then(res => {
