@@ -7,7 +7,7 @@ import Input from '../../../components/UI/Input/Input'
 import axios from '../../../axios-orders'
 import classes from './ContactData.css'
 
-const inputConfig = (label, id, type = 'text', eType = 'input', options = null, value = '') => {
+const inputConfig = (label, id, validation = {}, type = 'text', eType = 'input', options = null, value = '') => {
   return {
     eType,
     eConfig: {
@@ -16,19 +16,28 @@ const inputConfig = (label, id, type = 'text', eType = 'input', options = null, 
       label,
       options
     },
-    value
+    value,
+    validation
   }
 }
 
 export default class ContactData extends Component {
   state = {
     orderForm: {
-      name: inputConfig('Your Name', 'name'),
-      email: inputConfig('Your Email', 'email', 'email'),
-      phone: inputConfig('Your Number', 'phone', 'tel'),
-      address: inputConfig('Street Address', 'address'),
+      name: inputConfig('Your Name', 'name', {
+        required: true
+      }),
+      email: inputConfig('Your Email', 'email', {}, 'email'),
+      phone: inputConfig('Your Number', 'phone', {
+        required: true,
+        pattern: '.{10,}'
+      }, 'tel'),
+      address: inputConfig('Street Address', 'address', {
+        required: true,
+        pattern: '.{8,}'
+      }),
       zipCode: inputConfig('Zip Code', 'zipCode'),
-      deliveryMethod: inputConfig('Delivery Method', 'deliveryMethod', null, 'select', [
+      deliveryMethod: inputConfig('Delivery Method', 'deliveryMethod', null, null, 'select', [
         { value: 'cheapest', displayValue: 'Cheapest' },
         { value: 'fastest', displayValue: 'Fastest' }
       ], 'cheapest')
@@ -37,6 +46,7 @@ export default class ContactData extends Component {
   }
 
   inputChangedHandler = (e, targetId) => {
+    e.preventDefault()
     const updatedOrderForm = { ...this.state.orderForm }
     const updatedElement = {
       ...updatedOrderForm[targetId],
@@ -86,8 +96,8 @@ export default class ContactData extends Component {
     const orderFormArr = Object.values(orderForm)
     let form = (
       <form onSubmit={this.orderHandler}>
-        {orderFormArr.map(e => <Input
-          key={e.eConfig.id}
+        {orderFormArr.map((e, index) => <Input
+          key={index}
           {...e}
           onChange={(event) => this.inputChangedHandler(event, e.eConfig.id)}
         />)}
