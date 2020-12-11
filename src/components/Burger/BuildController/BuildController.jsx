@@ -26,7 +26,7 @@ const controls = [
 const buildController = props => {
   const { onLess, onMore, onOrder, ingredients, price } = props
 
-  const purchasable = ingredients > 1;
+  const purchasable = ingredients.length > 1;
   // ingsArr = { 'bacon': 1, 'cheese': 3, 'meat': 0, 'salad': 2 }
   const ingsArr = ingredients.reduce((prev, curr) => {
     prev[curr] = (prev[curr] || 0) + 1

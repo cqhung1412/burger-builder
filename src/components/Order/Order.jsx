@@ -9,7 +9,7 @@ import classes from './Order.css'
 
 class Order extends Component {
   deleteOrderHandler = () => {
-    axios.delete('/orders/' + this.props.orderKey)
+    axios.delete('/orders.json', this.props.orderKey)
       .then(() => {
 
       })
@@ -21,7 +21,7 @@ class Order extends Component {
       <div className={classes.Order}>
         <p>Ingredients: </p>
         <IngredientSummary ingredients={ingredients} totalPrice={price} />
-        <p>Total Price: <strong>{price}$</strong></p>
+        <p>Total Price: <strong>{Number(price).toFixed(2)}$</strong></p>
         <Button
           btnType='Danger'
           onClick={this.deleteOrderHandler}
