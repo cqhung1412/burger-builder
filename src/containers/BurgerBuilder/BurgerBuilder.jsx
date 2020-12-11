@@ -14,8 +14,6 @@ import * as actionTypes from '../../store/actions'
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: null,
-    totalPrice: 0.0,
     isModalOpen: false,
     loading: false
   }
@@ -24,44 +22,20 @@ class BurgerBuilder extends Component {
     this.setState({ loading: true })
     axios.get('/ingredients.json')
       .then(res => Object.values(res.data)) // = { 1:"bacon", 2:"cheese",... }
-      .then(ingredients => this.setup(ingredients))
+      .then(ingredients => {
+        axios.get('/price.json')
+          .then(res => {
+            const ingredientPrice = res.data // = { bacon: 0.30, cheese: 0.50,... }
+            this.props.onComponentDidMount(ingredients, ingredientPrice)
+          })
+          .catch(err => console.log(err))
+      })
+      .then(() => this.setState({ loading: false }))
       .catch(err => console.log(err))
-  }
-
-  setup(ingredients = []) {
-    this.setState({
-      ingredients: ingredients,
-      totalPrice: 4.0,
-      isModalOpen: false,
-      loading: false
-    })
   }
 
   toggleModal = () => {
     this.setState({ isModalOpen: !this.state.isModalOpen })
-  }
-
-  addIngredient = (ing, price) => {
-    // add one to the bottom
-    this.setState({ 
-      ingredients: [...this.props.ingredients, ing], 
-      totalPrice: this.props.totalPrice + price 
-    })
-  }
-
-  removeIngredient = (ing, price) => {
-    let updatedIngredients = [...this.props.ingredients]
-    // remove the bottom ingredient
-    for (let i = updatedIngredients.length - 1; i >= 0; i--) {
-      if(updatedIngredients[i] === ing) {
-        updatedIngredients.splice(i, 1)
-        break
-      }
-    }
-    this.setState({ 
-      ingredients: [...updatedIngredients], 
-      totalPrice: this.props.totalPrice - price 
-    })
   }
 
   purchaseContinueHandler = () => {    
@@ -78,40 +52,48 @@ class BurgerBuilder extends Component {
   }
 
   render() {
+    const { isModalOpen, loading } = this.state
+    const { 
+      ingredients, 
+      totalPrice, 
+      ingredientPrice, 
+      onIngredientAdded, 
+      onIngredientRemoved 
+    } = this.props
+
     let orderSummary = null
     let burger = <Spinner />
 
-    if (this.props.ingredients) {
+    if (ingredients) {
       burger = (
         <Auxiliary>
-          <Burger ingredients={[...this.props.ingredients]}/>
+          <Burger ingredients={[...ingredients]}/>
           <BuildController 
-            onLess={(ing, price)=>this.props.onIngredientRemoved(ing, price)} 
-            onMore={(ing, price)=>this.props.onIngredientAdded(ing, price)}
+            onLess={(ing)=>onIngredientRemoved(ing)} 
+            onMore={(ing)=>onIngredientAdded(ing)}
             onOrder={this.toggleModal}
-            ingredients={[...this.props.ingredients]}
-            price={this.props.totalPrice}
+            ingredients={[...ingredients]}
+            totalPrice={totalPrice}
+            ingredientPrice={{...ingredientPrice}}
           />
         </Auxiliary>
       )
       orderSummary = (
         <OrderSummary 
-          ingredients={this.props.ingredients} 
-          totalPrice={this.props.totalPrice}
+          ingredients={ingredients} 
+          totalPrice={totalPrice}
           onCancel={this.toggleModal} 
           onContinue={this.purchaseContinueHandler}
         />
       )
     }
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />
-    }
+    if (loading) {  orderSummary = <Spinner /> }
 
     return (
       <Auxiliary>
         <Modal 
-          show={this.state.isModalOpen}
+          show={isModalOpen}
           onBackdropClick={this.toggleModal}
         >
           {orderSummary}
@@ -125,19 +107,24 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    totalPrice: state.totalPrice,
+    ingredientPrice: state.ingredientPrice
   } 
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: (ingredient, price) => dispatch({
-      type: actionTypes.ADD_INGREDIENTS,
-      payload: { ingredient, price }
+    onComponentDidMount: (ingredients, ingredientPrice) => dispatch({
+      type: actionTypes.SETUP,
+      payload: { ingredients, ingredientPrice }
     }),
-    onIngredientRemoved: (ingredient, price) => dispatch({
+    onIngredientAdded: (ingredient) => dispatch({
+      type: actionTypes.ADD_INGREDIENTS,
+      payload: { ingredient }
+    }),
+    onIngredientRemoved: (ingredient) => dispatch({
       type: actionTypes.REMOVE_INGREDIENTS,
-      payload: { ingredient, price }
+      payload: { ingredient }
     })
   }
 }
