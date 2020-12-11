@@ -24,13 +24,14 @@ const controls = [
 ]
 
 const buildController = props => {
-  const { onLess, onMore, onOrder, ingredients, price, purchasable } = props
+  const { onLess, onMore, onOrder, ingredients, price } = props
 
+  const purchasable = ingredients > 1;
+  // ingsArr = { 'bacon': 1, 'cheese': 3, 'meat': 0, 'salad': 2 }
   const ingsArr = ingredients.reduce((prev, curr) => {
     prev[curr] = (prev[curr] || 0) + 1
     return prev
   }, { 'bacon': 0, 'cheese': 0, 'meat': 0, 'salad': 0 })
-
   const amountArr = Object.values(ingsArr)
 
   return (

@@ -11,7 +11,7 @@ const burger = (props) => {
       {ingredients.map((type, index) => (
         <BurgerIngredient key={index} type={type}/>
       ))}
-      {ingredients.length < 1 && <p>Let's start adding ingredients!</p>}
+      {ingredients.length < 1 && <p>Let's start adding ingredients :D</p>}
       <BurgerIngredient type='bread-bottom' />
     </div>
   )

@@ -13,7 +13,6 @@ class BurgerBuilder extends Component {
   state = {
     ingredients: null,
     totalPrice: 0.0,
-    purchasable: false,
     isModalOpen: false,
     loading: false
   }
@@ -39,10 +38,6 @@ class BurgerBuilder extends Component {
       isModalOpen: false,
       loading: false
     })
-  }
-
-  togglePurchaseState(ingredientArray) {
-    this.setState({ purchasable: ingredientArray.length >= 1 })
   }
 
   toggleModal = () => {
@@ -101,7 +96,6 @@ class BurgerBuilder extends Component {
             onOrder={this.toggleModal}
             ingredients={[...this.state.ingredients]}
             price={this.state.totalPrice}
-            purchasable={this.state.purchasable}
           />
         </Auxiliary>
       )
