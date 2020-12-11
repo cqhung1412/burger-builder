@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import ContactData from './ContactData/ContactData'
@@ -9,34 +10,6 @@ import Auxiliary from '../../hoc/Auxiliary/Auxiliary'
 import axios from '../../axios-orders'
 
 class Checkout extends Component {
-  state = {
-    ingredients: null,
-    price: 0.0
-  }
-  
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (!prevState.ingredients) {
-      const ingredients = []
-      let price = 0.0
-      const query = new URLSearchParams(nextProps.location.search)
-      
-      for (let param of query.entries()) {
-        if (param[0] === 'price') {
-          price = param[1]
-        }
-        else {
-          ingredients.push(param[0])
-        }
-      }
-
-      return { 
-        ingredients: ingredients,
-        price: price
-      } // ings: ['salad', 'cheese', 'bacon', 'meat']
-    }
-    return null
-  }
-
   checkoutCancelHandler = () => {
     this.props.history.goBack()
   }
@@ -46,20 +19,28 @@ class Checkout extends Component {
   }
 
   render() {
+    const { ingredients } = this.props
     return (
       <Auxiliary>
         <CheckoutSummary 
-          ingredients={this.state.ingredients}
+          ingredients={ingredients}
           onCancel={this.checkoutCancelHandler}
           onConfirm={this.checkoutConfirmHandler}
         />
         <Route 
           path={this.props.match.path + '/contact'} 
-          render={(props) => (<ContactData ingredients={this.state.ingredients} price={this.state.price} {...props} />)}
+          render={(props) => (<ContactData {...props} />)}
         />
       </Auxiliary>
     )
   }
 }
 
-export default withErrorHandler(Checkout, axios)
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
+  } 
+}
+
+export default connect(mapStateToProps)(withErrorHandler(Checkout, axios))

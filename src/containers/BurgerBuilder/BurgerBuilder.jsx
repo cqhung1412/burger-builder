@@ -39,16 +39,17 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {    
-    const queryParams = []
-    this.props.ingredients.forEach(ing => {
-      queryParams.push(encodeURIComponent(ing))
-    })
-    queryParams.push('price=' + this.props.totalPrice)
-    const queryString = queryParams.join('&')
-    this.props.history.push({
-      pathname: '/checkout',
-      search: '?' + queryString
-    })
+    // const queryParams = []
+    // this.props.ingredients.forEach(ing => {
+    //   queryParams.push(encodeURIComponent(ing))
+    // })
+    // queryParams.push('price=' + this.props.totalPrice)
+    // const queryString = queryParams.join('&')
+    // this.props.history.push({
+    //   pathname: '/checkout',
+    //   search: '?' + queryString
+    // })
+    this.props.history.push('/checkout')
   }
 
   render() {
@@ -128,6 +129,5 @@ const mapDispatchToProps = dispatch => {
     })
   }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios))

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Button from '../../../components/UI/Button/Button'
 import Spinner from '../../../components/UI/Spinner/Spinner'
@@ -21,7 +22,7 @@ const inputConfig = (label, id, validation = {}, type = 'text', eType = 'input',
   }
 }
 
-export default class ContactData extends Component {
+class ContactData extends Component {
   state = {
     orderForm: {
       name: inputConfig('Your Name', 'name', {
@@ -115,3 +116,12 @@ export default class ContactData extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
+  } 
+}
+
+export default connect(mapStateToProps)(ContactData)

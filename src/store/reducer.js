@@ -13,7 +13,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         ingredients: [...payload.ingredients],
-        ingredientPrice: {...payload.ingredientPrice}
+        ingredientPrice: {...payload.ingredientPrice},
+        totalPrice: 3.73
       }
 
     case actionTypes.ADD_INGREDIENTS:

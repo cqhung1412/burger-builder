@@ -25,9 +25,9 @@ const BuildElement = props => {
 const buildController = props => {
   const { onLess, onMore, onOrder, ingredients, totalPrice, ingredientPrice } = props
 
-  const purchasable = ingredients.length > 1;
-  // ingsObj = { 'bacon': 1, 'cheese': 3, 'meat': 0, 'salad': 2 }
-  const ingsObj = ingredients.reduce((prev, curr) => {
+  const purchasable = ingredients.length > 3;
+  // ingredientObject = { 'bacon': 1, 'cheese': 3, 'meat': 0, 'salad': 2 }
+  const ingredientObject = ingredients.reduce((prev, curr) => {
     prev[curr] = (prev[curr] || 0) + 1
     return prev
   }, { 'bacon': 0, 'cheese': 0, 'meat': 0, 'salad': 0 })
@@ -42,7 +42,7 @@ const buildController = props => {
           key={control[0]}
           label={control[0]}
           price={control[1]}
-          amount={ingsObj[control[0]]}
+          amount={ingredientObject[control[0]]}
           onLess={() => onLess(control[0])}
           onMore={() => onMore(control[0])}
         />
