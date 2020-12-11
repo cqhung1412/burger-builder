@@ -19,24 +19,16 @@ class BurgerBuilder extends Component {
   }
   
   componentDidMount() {
-    // console.log(this.props)
+    this.setState({ loading: true })
     axios.get('/ingredients.json')
       .then(res => {
-        const ingredients = res.data
-
-        const keyArr = Object.keys(ingredients)
-        const valArr = Object.values(ingredients)
-
-        let ingArr = []
-        valArr.forEach((value, index) => {
-          ingArr.push(Array(value).fill(keyArr[index])) // ingArr = [[cheese, cheese], [meat, ...], ...]
-        })
-        const result = ingArr.flat() // result = [cheese, cheese, meat, meat, meat, ...]
-        
-        this.setup(result) 
-        this.togglePurchaseState(result)
+        const ingredientObject = res.data // = { 1:"bacon", 2:"cheese",... }
+        const ingredients = Object.values(ingredientObject)
+        this.setup(ingredients) 
+        this.togglePurchaseState(ingredients)
       })
       .catch(err => console.log(err))
+    this.setState({ loading: false })
   }
 
   setup(ingredients = []) {
@@ -49,13 +41,8 @@ class BurgerBuilder extends Component {
     })
   }
 
-  togglePurchaseState(ings) {
-    const ingsObj = ings.reduce((prev, curr) => {
-      prev[curr] = (prev[curr] || 0) + 1
-      return prev
-    }, { 'bacon': 0, 'cheese': 0, 'meat': 0, 'salad': 0 })
-    const sum = Object.values(ingsObj).reduce((sum, el) => sum += el, 0)
-    this.setState({ purchasable: sum > 1 })
+  togglePurchaseState(ingredientArray) {
+    this.setState({ purchasable: ingredientArray.length >= 1 })
   }
 
   toggleModal = () => {
@@ -63,6 +50,7 @@ class BurgerBuilder extends Component {
   }
 
   addIngredient = (ing, price) => {
+    // add one to the bottom
     this.setState({ 
       ingredients: [...this.state.ingredients, ing], 
       totalPrice: this.state.totalPrice + price 
@@ -71,15 +59,19 @@ class BurgerBuilder extends Component {
   }
 
   removeIngredient = (ing, price) => {
-    let ings = [...this.state.ingredients]
-    for (let i = ings.length - 1; i >= 0; i--) {
-      if(ings[i] === ing) {
-        ings.splice(i, 1)
+    let updatedIngredients = [...this.state.ingredients]
+    // remove the bottom ingredient
+    for (let i = updatedIngredients.length - 1; i >= 0; i--) {
+      if(updatedIngredients[i] === ing) {
+        updatedIngredients.splice(i, 1)
         break
       }
     }
-    this.setState({ ingredients: ings, totalPrice: this.state.totalPrice - price })
-    this.togglePurchaseState(ings)
+    this.setState({ 
+      ingredients: updatedIngredients, 
+      totalPrice: this.state.totalPrice - price 
+    })
+    this.togglePurchaseState(updatedIngredients)
   }
 
   purchaseContinueHandler = () => {    
