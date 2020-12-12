@@ -49,7 +49,8 @@ class BurgerBuilder extends Component {
       totalPrice, 
       ingredientPrice, 
       onIngredientAdded, 
-      onIngredientRemoved 
+      onIngredientRemoved ,
+      error
     } = this.props
 
     let orderSummary = null
@@ -81,6 +82,8 @@ class BurgerBuilder extends Component {
 
     if (loading) {  orderSummary = <Spinner /> }
 
+    if (error) { burger = <p>Ingredients cannot be loaded D:</p> }
+
     return (
       <Auxiliary>
         <Modal 
@@ -96,11 +99,12 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => {
-  const { ingredients, totalPrice, ingredientPrice } = state.builder
+  const { ingredients, totalPrice, ingredientPrice, error } = state.builder
   return {
     ingredients,
     totalPrice,
-    ingredientPrice
+    ingredientPrice,
+    error
   } 
 }
 
