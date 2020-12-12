@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 
 import builderReducer from './reducers/burgerBuilder'
+import orderReducer from './reducers/order'
 
 const composeEnhancers =
   typeof window === 'object' &&
@@ -11,7 +12,8 @@ const composeEnhancers =
     }) : compose
 
 const reducers = combineReducers({
-  builder: builderReducer
+  builder: builderReducer,
+  order: orderReducer
 })
 
 const store = createStore(
