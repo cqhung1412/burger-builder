@@ -18,7 +18,7 @@ export const purchaseBurgerFailed = payload => {
 export const tryPurchaseBurger = orderData => {
   return dispatch => {
     axios.post('/orders.json', orderData)
-      .then(res => dispatch(purchaseBurgerSuccess(res)))
+      .then(res => dispatch(purchaseBurgerSuccess({ orderId: res.data, orderData })))
       .catch(err => dispatch(purchaseBurgerFailed(err)))
   }
 }

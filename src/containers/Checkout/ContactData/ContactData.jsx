@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import Button from '../../../components/UI/Button/Button'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import Input from '../../../components/UI/Input/Input'
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
 
 import axios from '../../../axios-instance'
 import classes from './ContactData.css'
-import { tryPurchaseBurger } from '../../../store/actions/order'
+import * as actionCreators from '../../../store/actions/index'
 
 const inputConfig = (label, id, validation = {}, type = 'text', eType = 'input', options = null, value = '') => {
   return {
@@ -129,8 +130,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderSubmit: (orderData) => dispatch(tryPurchaseBurger(orderData))
+    onOrderSubmit: (orderData) => dispatch(actionCreators.tryPurchaseBurger(orderData))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactData)
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios))
