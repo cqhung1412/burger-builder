@@ -1,9 +1,9 @@
 import * as actionTypes from './actions'
 
 const initialState = {
-  ingredients: [],
+  ingredients: null,
   totalPrice: 0.0,
-  ingredientPrice: {}
+  ingredientPrice: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         ingredients: [...payload.ingredients],
         ingredientPrice: {...payload.ingredientPrice},
-        totalPrice: 3.73
+        totalPrice: 1.49
       }
 
     case actionTypes.ADD_INGREDIENTS:
