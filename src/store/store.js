@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 
-import reducer from './reducer'
+import builderReducer from './reducers/burgerBuilder'
 
 const composeEnhancers =
   typeof window === 'object' &&
@@ -10,8 +10,12 @@ const composeEnhancers =
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
     }) : compose
 
+const reducers = combineReducers({
+  builder: builderReducer
+})
+
 const store = createStore(
-  reducer,
+  reducers,
   composeEnhancers(
     applyMiddleware(thunk)
   )
