@@ -10,7 +10,7 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 import axios from '../../axios-orders'
-import * as actionTypes from '../../store/actions'
+import * as actionCreators from '../../store/actions/index'
 
 class BurgerBuilder extends Component {
   state = {
@@ -106,27 +106,19 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => {
+  const { ingredients, totalPrice, ingredientPrice } = state.builder
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
-    ingredientPrice: state.ingredientPrice
+    ingredients,
+    totalPrice,
+    ingredientPrice
   } 
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onComponentDidMount: (ingredients, ingredientPrice) => dispatch({
-      type: actionTypes.SETUP,
-      payload: { ingredients, ingredientPrice }
-    }),
-    onIngredientAdded: (ingredient) => dispatch({
-      type: actionTypes.ADD_INGREDIENTS,
-      payload: { ingredient }
-    }),
-    onIngredientRemoved: (ingredient) => dispatch({
-      type: actionTypes.REMOVE_INGREDIENTS,
-      payload: { ingredient }
-    })
+    onComponentDidMount: (ingredients, ingredientPrice) => dispatch(actionCreators.setup({ingredients, ingredientPrice})),
+    onIngredientAdded: (ingredient) => dispatch(actionCreators.addIngredient({ingredient})),
+    onIngredientRemoved: (ingredient) => dispatch(actionCreators.removeIngredient({ingredient}))
   }
 }
 

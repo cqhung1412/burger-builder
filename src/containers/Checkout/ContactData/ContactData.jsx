@@ -60,7 +60,7 @@ class ContactData extends Component {
   orderHandler = (event) => {
     event.preventDefault()
 
-    const { ingredients, price } = this.props
+    const { ingredients, totalPrice } = this.props
     const orderData = { ...this.state.orderForm }
     for (let e in orderData) {
       orderData[e] = orderData[e].value
@@ -70,7 +70,7 @@ class ContactData extends Component {
     this.setState({ loading: true })
     const order = {
       ingredients: ingredients,
-      price: price,
+      price: totalPrice,
       customer: {
         name,
         email,
@@ -119,8 +119,8 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.builder.ingredients,
+    totalPrice: state.builder.totalPrice
   } 
 }
 
