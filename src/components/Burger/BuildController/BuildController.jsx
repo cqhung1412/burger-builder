@@ -41,7 +41,7 @@ const buildController = props => {
         <BuildElement
           key={control[0]}
           label={control[0]}
-          price={control[1]}
+          price={control[1].toFixed(2)}
           amount={ingredientObject[control[0]]}
           onLess={() => onLess(control[0])}
           onMore={() => onMore(control[0])}

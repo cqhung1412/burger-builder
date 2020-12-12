@@ -3,7 +3,7 @@
   height: fit-content;
   margin: 10px auto;
   padding-bottom: 10px;
-  background-color: #d0efff;
+  background-color: #f9e0ae;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,28 +58,26 @@
 }
 
 .BuildElement .Less {  
-  background-color: #2a9df4;
+  background-color: #682c0e;
   color: white;
 }
 
 .BuildElement .More {
-  background-color: #187bcd;
+  background-color: #c24914;
   color: white;
 }
 
 .BuildElement .Less:hover, .BuildElement .Less:active {  
-  background-color: #7abaeb;
-  color: black;
+  background-color: #793d1f;
 }
 
 .BuildElement .More:hover,.BuildElement .More:active {
-  background-color: #3f8dce;
-  color: black;
+  background-color: #d35a25;
 }
 
 
 .OrderButton {
-  background-color: #3f8dce;
+  background-color: #fc8621;
   outline: none;
   cursor: pointer;
   border: 1px solid #966909;
@@ -92,7 +90,7 @@
 }
 
 .OrderButton:hover, .OrderButton:active {
-  background-color: #A0DB41;
+  background-color: #fd9732;
   border: 1px solid #966909;
   color: #966909;
 }
