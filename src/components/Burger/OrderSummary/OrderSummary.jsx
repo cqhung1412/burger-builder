@@ -9,7 +9,7 @@ const orderSummary = (props) => {
       <h3 style={{textAlign: 'center'}}>Your Burger Order</h3>
       <p>Your delicious burger contains these following ingredients</p>
       <IngredientSummary ingredients={props.ingredients}/>
-      <p><strong>Total Price: {props.totalPrice.toFixed(2)}$</strong></p>
+      <p><strong>Total Price: {props.totalPrice}$</strong></p>
       <p>Proceed to Checkout?</p>
       <Button btnType='Success' onClick={props.onContinue}>CONTINUE</Button>
       <Button btnType='Danger' onClick={props.onCancel}>CANCEL</Button>

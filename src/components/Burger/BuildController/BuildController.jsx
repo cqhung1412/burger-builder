@@ -36,7 +36,7 @@ const buildController = props => {
 
   return (
     <div className={classes.BuildController}>
-      <p>Total Price: <strong>{+totalPrice.toFixed(2)}$</strong></p>
+      <p>Total Price: <strong>{totalPrice}$</strong></p>
       {controls.map(control => (
         <BuildElement
           key={control[0]}
