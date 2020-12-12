@@ -7,7 +7,7 @@ import ContactData from './ContactData/ContactData'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary'
 
-import axios from '../../axios-orders'
+import axios from '../../axios-instance'
 
 class Checkout extends Component {
   checkoutCancelHandler = () => {

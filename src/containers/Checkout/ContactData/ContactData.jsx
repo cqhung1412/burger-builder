@@ -5,7 +5,7 @@ import Button from '../../../components/UI/Button/Button'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import Input from '../../../components/UI/Input/Input'
 
-import axios from '../../../axios-orders'
+import axios from '../../../axios-instance'
 import classes from './ContactData.css'
 
 const inputConfig = (label, id, validation = {}, type = 'text', eType = 'input', options = null, value = '') => {

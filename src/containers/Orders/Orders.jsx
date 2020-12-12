@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
-import axios from '../../axios-orders'
+import axios from '../../axios-instance'
 
 import Order from '../../components/Order/Order'
 import Button from '../../components/UI/Button/Button'

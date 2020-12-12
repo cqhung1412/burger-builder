@@ -9,7 +9,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
-import axios from '../../axios-orders'
+import axios from '../../axios-instance'
 import * as actionCreators from '../../store/actions/index'
 
 class BurgerBuilder extends Component {
@@ -20,18 +20,8 @@ class BurgerBuilder extends Component {
   
   componentDidMount() {
     this.setState({ loading: true })
-    axios.get('/ingredients.json')
-      .then(res => Object.values(res.data)) // = { 1:"bacon", 2:"cheese",... }
-      .then(ingredients => {
-        axios.get('/price.json')
-          .then(res => {
-            const ingredientPrice = res.data // = { bacon: 0.30, cheese: 0.50,... }
-            this.props.onComponentDidMount(ingredients, ingredientPrice)
-          })
-          .catch(err => console.log(err))
-      })
-      .then(() => this.setState({ loading: false }))
-      .catch(err => console.log(err))
+    this.props.onComponentDidMount()
+    this.setState({ loading: false })
   }
 
   toggleModal = () => {
@@ -116,7 +106,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onComponentDidMount: (ingredients, ingredientPrice) => dispatch(actionCreators.setup({ingredients, ingredientPrice})),
+    onComponentDidMount: () => dispatch(actionCreators.initIngredients()),
     onIngredientAdded: (ingredient) => dispatch(actionCreators.addIngredient({ingredient})),
     onIngredientRemoved: (ingredient) => dispatch(actionCreators.removeIngredient({ingredient}))
   }
