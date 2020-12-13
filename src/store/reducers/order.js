@@ -37,6 +37,10 @@ const reducer = (state = initialState, action) => {
         loading: false
       }
 
+    case actionTypes.INIT_FETCH_ORDERS:
+      return {
+        ...state
+      }
     default:
       return state
   }

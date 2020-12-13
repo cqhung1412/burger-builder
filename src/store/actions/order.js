@@ -29,3 +29,23 @@ export const initPurchase = () => {
     type: actionTypes.INIT_PURCHASE
   }
 }
+
+export const fetchOrdersSuccess = payload => {
+  return {
+    type: actionTypes.FETCH_ORDERS_SUCCESS,
+    payload
+  }
+}
+
+export const fetchOrdersFailed = payload => {
+  return {
+    type: actionTypes.FETCH_ORDERS_FAILED,
+    payload
+  }
+}
+
+export const initFetchOrders = () => {
+  return {
+    type: actionTypes.INIT_FETCH_ORDERS
+  }
+}
