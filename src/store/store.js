@@ -11,13 +11,13 @@ const composeEnhancers =
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
     }) : compose
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   builder: builderReducer,
   order: orderReducer
 })
 
 const store = createStore(
-  reducers,
+  rootReducer,
   composeEnhancers(
     applyMiddleware(thunk)
   )

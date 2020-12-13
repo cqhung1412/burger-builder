@@ -44,8 +44,7 @@ class ContactData extends Component {
         { value: 'cheapest', displayValue: 'Cheapest' },
         { value: 'fastest', displayValue: 'Fastest' }
       ], 'cheapest')
-    },
-    loading: false
+    }
   }
 
   inputChangedHandler = (e, targetId) => {
@@ -69,7 +68,6 @@ class ContactData extends Component {
     }
     const { name, email, address, phone, zipCode, deliveryMethod } = orderData
 
-    this.setState({ loading: true })
     const order = {
       ingredients: ingredients,
       price: totalPrice,
@@ -82,18 +80,7 @@ class ContactData extends Component {
       },
       deliveryMethod
     }
-    // axios.post('/orders.json', order)
-    //   .then(res => {
-    //     console.log(res)
-
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     this.setState({ loading: false })
-    //   })
     this.props.onOrderSubmit(order)
-    this.setState({ loading: false })
-    this.props.history.push('/')
   }
 
   render() {
@@ -109,7 +96,7 @@ class ContactData extends Component {
         <Button btnType='Success' type='submit'>ORDER</Button>
       </form>
     )
-    if (this.state.loading)
+    if (this.props.loading)
       form = <Spinner />
 
     return (
@@ -124,7 +111,8 @@ class ContactData extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.builder.ingredients,
-    totalPrice: state.builder.totalPrice
+    totalPrice: state.builder.totalPrice,
+    loading: state.order.loading
   }
 }
 
