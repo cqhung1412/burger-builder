@@ -20,7 +20,7 @@ export const tryPurchaseBurger = orderData => {
     dispatch({ type: actionTypes.TRY_PURCHASE_BURGER })
     axios.post('/orders.json', orderData)
       .then(res => dispatch(purchaseBurgerSuccess({ orderId: res.data.name, orderData })))
-      .catch(err => dispatch(purchaseBurgerFailed(err)))
+      .catch(error => dispatch(purchaseBurgerFailed({ error })))
   }
 }
 
@@ -45,7 +45,10 @@ export const fetchOrdersFailed = payload => {
 }
 
 export const initFetchOrders = () => {
-  return {
-    type: actionTypes.INIT_FETCH_ORDERS
+  return dispatch => {
+    dispatch({ type: actionTypes.INIT_FETCH_ORDERS })
+    axios.get('/orders.json')
+      .then(res => dispatch(fetchOrdersSuccess({ orderData: res.data })))
+      .catch(error => dispatch(fetchOrdersFailed({ error })))
   }
 }
