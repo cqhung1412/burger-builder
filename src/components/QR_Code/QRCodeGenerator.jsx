@@ -6,7 +6,7 @@ const QRCodeGenerator = props => {
         <div>
             <QRCode
                 id='qrcode'
-                value='https://viblo.asia/u/tranchien'
+                value='https://bear-burger-builder.web.app/'
                 size={290}
                 level={'H'}
                 includeMargin={true}

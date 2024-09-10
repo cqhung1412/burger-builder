@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export default class Checkout extends Component {
-  state = {
-    ingredients: ['salad', 'cheese', 'bacon', 'meat']
-  }
-  
+import classes from './Checkout.css'
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+import ContactData from './ContactData/ContactData'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+
+import axios from '../../axios-instance'
+
+class Checkout extends Component {
   checkoutCancelHandler = () => {
     this.props.history.goBack()
   }
@@ -15,14 +20,35 @@ export default class Checkout extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <CheckoutSummary 
-          ingredients={this.state.ingredients}
-          onCancel={this.checkoutCancelHandler}
-          onConfirm={this.checkoutConfirmHandler}
-        />
-      </div>
-    )
+    const { ingredients, purchased } = this.props
+    let summary = <Redirect to='/' />
+    const purchasedRedirect = purchased && <Redirect to='/' />
+    if (ingredients) {
+      summary = (
+        <div className={classes.CheckoutContainer}>
+          {purchasedRedirect}
+          <CheckoutSummary
+            ingredients={ingredients}
+            onCancel={this.checkoutCancelHandler}
+            onConfirm={this.checkoutConfirmHandler}
+          />
+          <Route
+            path={this.props.match.path + '/contact'}
+            component={ContactData}
+          />
+        </div>
+      )
+    }
+    return summary
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    ingredients: state.builder.ingredients,
+    totalPrice: state.builder.totalPrice,
+    purchased: state.order.purchased
+  }
+}
+
+export default connect(mapStateToProps)(withErrorHandler(Checkout, axios))
